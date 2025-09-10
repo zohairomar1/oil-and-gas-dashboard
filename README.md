@@ -1,73 +1,70 @@
-# Corporate Dashboard – Asset Integrity Monitoring (Power BI)
+# Oil & Gas Asset Integrity Dashboard (Power BI)
 
-## Overview
-
-This Power BI dashboard project was developed to simulate an **Asset Integrity Dashboard** used within an engineering or operations context—specifically designed to support **business strategy** and **optimization** in a natural gas business unit.
-
-The dashboard demonstrates how data visualization can support proactive decision-making, process automation, and performance tracking across engineering and project execution domains.
+A portfolio-ready **asset integrity** dashboard that demonstrates how Power BI can turn operational data into role-based insights for **engineering**, **compliance**, and **business optimization**. Built with simulated datasets to mirror common KPIs and workflows used in natural gas infrastructure.
 
 ---
 
-## Project Objectives
-
-- Visualize and monitor **monthly asset integrity performance**.
-- Enable **data-driven decision making** through clear KPIs and trends.
-- Simulate a live dashboard using **Power BI's auto-refresh** capabilities (dummy data used).
-- Structure the display by **departments or operational areas**.
-- Align with best practices in **process optimization**, **compliance**, and **stakeholder reporting**.
-
----
-
-## Features
-
-- **Deviation, Anomaly, and MoC Status Tracking**
-    - Displays number of items in progress, overdue, and closed.
-    - Useful for identifying areas needing corrective action.
-
-- **Safety Critical Elements (SCE) Cumulative Status**
-    - Progress toward compliance targets.
-
-- **Certifications Overview**
-    - PLO, COI, and Helideck Certification visual indicators.
-    - Promotes safety compliance awareness.
-
-- **Corrosion & Oil Monitoring**
-    - Trends of corrosion rate (mmpy) and oil in water content (ppm) by month.
-
-- **Lifting Equipment Status**
-    - Tracks overdue and completed inspections across multiple years.
-
-- **Inspection Backlog Indicator**
-    - Real-time percentage of inspections behind schedule.
-
-- **SRB Level Indicator**
-    - Summarizes overall asset integrity risk in a clear, business-friendly message.
+## What this shows (at a glance)
+- **Status tracking** for *Deviation*, *Anomaly*, and *Management of Change (MoC)* items (in-progress, overdue, closed).
+- **Compliance & certifications** overview (PLO, COI, Helideck) and **SCE cumulative** progress to target.
+- **Trends** for corrosion rate (mmpy) and oil-in-water content (ppm) with monthly slicing.
+- **Inspection performance** for lifting equipment (scope, inspected, overdue) across multiple years.
+- **Backlog & SRB** tiles that surface overall risk level and inspection backlog %.
+- **Slicers** for Month/Year + role-oriented layouts to support engineers and managers.
 
 ---
 
-## Technical Details
-
-- **Platform:** Microsoft Power BI
-- **Data Source (Simulated):**
-    - Microsoft SQL Server
-    - SharePoint Lists
-    - Dummy data used in this demo version
-- **Auto-Refresh:** Simulated daily update schedule
-- **Filter Options:** Monthly and yearly slicing capabilities
+## Tech & approach
+- **Platform:** Microsoft Power BI Desktop  
+- **Data modeling:** Star-style tables for KPIs + thin model for cards/donuts  
+- **Connectors (simulated):** SQL Server schema + SharePoint-list style tables  
+- **Refresh behavior:** Daily refresh pattern simulated in PBIX  
+- **Audience:** Engineers (tactical view), Managers (roll-ups), Leadership (KPI tiles)
 
 ---
 
-## Use Case Alignment
+## Demo data (included)
+This project uses **simulated CSV datasets** that align with the screenshots and PBIX visuals.
 
-This project reflects the core tasks outlined in the Engineering Strategy & Business Optimization stream:
+Place these in a folder named `data/` at the repo root:
 
-✅ **Business Process Improvements** – Provides clarity on where delays and risks occur in asset integrity management.
+- `corrosion_rate_2020.csv` — corrosion rate (mmpy) by month (2020)
+- `oil_in_water_content_2020.csv` — oil-in-water content (ppm) by month (2020)
+- `lifting_equipment_overview.csv` — yearly scope / inspected / overdue (2018–2023)
+- `action_item_status.csv` — Deviation & Anomaly (in_progress, overdue, closed)
+- `moc_status.csv` — MoC open count
+- `certifications_progress.csv` — % complete for PLO, COI, Helideck
+- `sce_and_close_rates.csv` — SCE overdue >1 month, total closed actions, total MoC
+- `inspection_backlog_and_srb.csv` — inspection backlog % and SRB label
+- `sce_cumulative_status.csv` — SCE cumulative remaining-to-target (0.94)
 
-✅ **Tool Development (Power BI)** – Demonstrates practical use of Power BI for process visibility and stakeholder reporting.
+> **Note:** Values are synthetic and provided for portfolio demonstration only.
 
-✅ **Data Modeling & Reporting** – Simulates real-world data transformation and visualization logic to support leadership decisions.
+---
 
-✅ **Stakeholder Communication** – Dashboard designed to be consumed by various functional groups, from engineering teams to senior leadership.
+## Visuals → data mapping
+
+| Visual (PBIX)                           | Fields / Table                                      |
+|----------------------------------------|-----------------------------------------------------|
+| Deviation / Anomaly status donuts      | `action_item_status.csv` (type, in_progress, overdue, closed) |
+| MoC status donut + Total MoC           | `moc_status.csv` and `sce_and_close_rates.csv`      |
+| Certifications gauges (PLO/COI/Heli)   | `certifications_progress.csv` (percent_complete)    |
+| SCE cumulative “Remaining” card        | `sce_cumulative_status.csv` (value)                 |
+| Corrosion rate line (mmpy)             | `corrosion_rate_2020.csv` (month, corrosion_mmpy)   |
+| Oil in water area (ppm)                | `oil_in_water_content_2020.csv` (month, oil_in_water_ppm) |
+| Lifting equipment clustered bars       | `lifting_equipment_overview.csv` (year, scope, inspected, overdue) |
+| Inspection backlog % tile              | `inspection_backlog_and_srb.csv` (Inspection_Backlog_Percent) |
+| SRB level tile                         | `inspection_backlog_and_srb.csv` (SRB_Level_Label)  |
+| KPI summary card (right rail)          | `sce_and_close_rates.csv`                            |
+
+---
+
+## How to run
+1. **Clone** the repo and create a `data/` folder at the root.  
+2. **Copy CSVs** from `/data` (this repo) into that folder.  
+3. Open `dashboard.pbix` in **Power BI Desktop**.  
+4. If prompted, verify the **file paths** for the CSVs (Transform data → Data source settings).  
+5. Click **Refresh**. Confirm visuals align with the screenshots.
 
 ---
 
@@ -81,9 +78,12 @@ This project reflects the core tasks outlined in the Engineering Strategy & Busi
 
 ---
 
-## Notes
-
-> This dashboard uses simulated/dummy data. In a real deployment, this would be connected to live data sources (SQL Server, SharePoint) and used for active monitoring.
+## Why this matters
+- **Business process visibility:** surfaces delays, backlogs, and risk in one place.
+- **Stakeholder-ready:** role-based views for engineers vs. managers; KPI tiles for leadership.
+- **Transferable skills:** data modeling, Power BI report design, KPI definition, and clear communication.
 
 ---
 
+### Disclaimer
+This solution uses **dummy/simulated data** and does **not** represent real company operations or confidential information.
